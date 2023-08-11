@@ -1,0 +1,36 @@
+specVersion: 0.0.5
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Hashmasks
+    network: mainnet
+    source:
+      address: "0xC2C747E0F7004F9E8817Db2ca4997657a7746928"
+      abi: Hashmasks
+      startBlock: 7000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - ApprovalForAll
+        - NameChange
+        - OwnershipTransferred
+        - Transfer
+      abis:
+        - name: Hashmasks
+          file: Hashmasks\abis\Hashmasks.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: NameChange(indexed uint256,string)
+          handler: handleNameChange
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: Hashmasks\Hashmasks.wasm
